@@ -2,6 +2,23 @@
 -- Nob inside of cirular container that can only go as far as
 -- the edge of the circular container
 
+-- Here is an example of a property table with some explanations
+-- local propsTable = {
+-- 	nToCRatio = 0.5,	-- This is the ratio of the nob's radius to the container's radius
+-- 	radius = 50, 		-- This is the radius of the container
+-- 	x = 100,			-- The x-coordinate of center of joystick
+-- 	y = 100,			-- y-coordinate of center of joystick
+-- 	restingXValue = 0,	-- The x value to be sent from getXYValues when joystick is at center
+-- 	restingYValue = 0,	-- The y value to be sent from getXYValues when joystick is at center
+-- 	scaleX = 100,		-- Difference between Max and Min x-values. This would go from -50 to 50
+-- 	scaleY = 100,		-- Same as scaleX but for y
+-- 	touchHandler = {
+-- 		onTouch = function(self, x, y)
+-- 			-- Use x and y values to do something
+-- 		end
+-- 	}
+-- }
+
 -- Class table variable to hold all class variables and methods
 local JSCreator = {}
 
@@ -15,8 +32,8 @@ function JSCreator:createFromProperties(props)
 	JS.r = props.radius
 	JS.x = props.x
 	JS.y = props.y
-	JS.centerX = props.centerX
-	JS.centerY = props.centerY
+	JS.restingXValue = props.restingXValue
+	JS.restingYValue = props.restingYValue
 	JS.scaleX = props.rangeX / JS.r
 	JS.scaleY = props.rangeY / JS.r
 
@@ -35,16 +52,16 @@ function getXYValues(self)
 	local coords = {}
 
 	local x = self.nob.x - self.x
-	coords.x = x * self.scaleX + self.centerX
+	coords.x = x * self.scaleX + self.restingXValue
 
 	local y = self.nob.y - self.y
-	coords.y = y * self.scaleY + self.centerY
+	coords.y = y * self.scaleY + self.restingYValue
 
 	return coords
 end
 
 function getRestingXYValues(self)
-	return {x = self.centerX, y = self.centerY}
+	return {x = self.restingXValue, y = self.restingYValue}
 end
 
 -- function to display the joystick on screen
