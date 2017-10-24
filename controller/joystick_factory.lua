@@ -30,12 +30,13 @@ function JSCreator:createFromProperties(props)
 	-- These are the fields that we need values for
 	JS.nToCRatio = props.nToCRatio
 	JS.r = props.radius
+	JS.diameter = JS.r * 2
 	JS.x = props.x
 	JS.y = props.y
 	JS.restingXValue = props.restingXValue
 	JS.restingYValue = props.restingYValue
-	JS.scaleX = props.rangeX / JS.r
-	JS.scaleY = props.rangeY / JS.r
+	JS.scaleX = props.rangeX / JS.diameter
+	JS.scaleY = props.rangeY / JS.diameter
 
 	-- This is an optional touch handler so that the joystick will 
 	-- call its onTouch method with x and y values as parameters
